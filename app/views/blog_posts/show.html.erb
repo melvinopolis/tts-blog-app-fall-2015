@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h3><%= @blog_post.post_title %></h3>
+	</div>
+	<div class="panel-body">
+		<p>by <%= @blog_post.user.username %></p>
+		<p><small><em><%= time_ago_in_words(@blog_post.created_at) %> ago</small></em></p>
+		<p><%= @blog_post.post_entry %></p>
+	</div>
+	<div class="panel-footer">
+		<%= link_to 'Edit', edit_blog_post_path(@blog_post), class: "btn btn-warning" %>
+	</div>
+</div>
+
+<div class="panel panel-success">
+	<div class="panel-heading">
+		<h4>Post a Comment</h4>
+	</div>
+	<div class="panel-body">
+		<%= render 'comments/form' %>
+	</div>
+</div>
+
+<% if @blog_post.comments.presence %>
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+			<h4>Comments</h4>
+		</div>
+		<% @blog_post.comments.each do |comment| %>
+			<div class="panel-body">
+				<p><strong><%= comment.user.username %></strong> said:</p>
+				<p><%= comment.comment %></p>
+				<p><small><em><%= time_ago_in_words(comment.created_at) %> ago</em></small></p>
+			</div>
+		<% end %>
+	</div>
+<% end %>
+
+<%= link_to 'Back to All Posts', root_path, class: "btn btn-default" %>
