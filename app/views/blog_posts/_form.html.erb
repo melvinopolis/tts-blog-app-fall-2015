@@ -15,7 +15,7 @@
     <%= f.text_field :post_title %>
   </div>
   <div class="field">
-    <%= f.text_area :post_entry %>
+    <%= f.text_area :post_entry, rows: 15 %>
   </div>
   <div class="field">
     <%= f.collection_select :user_id, @users, :id, :name %>
@@ -24,3 +24,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+<br>

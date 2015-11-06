@@ -5,12 +5,17 @@
 		<h3><%= @blog_post.post_title %></h3>
 	</div>
 	<div class="panel-body">
-		<p>by <%= @blog_post.user.username %></p>
+		<p>by <%= link_to @blog_post.user.username, user_path(@blog_post.user_id) %></p>
 		<p><small><em><%= time_ago_in_words(@blog_post.created_at) %> ago</small></em></p>
 		<p><%= @blog_post.post_entry %></p>
 	</div>
 	<div class="panel-footer">
-		<%= link_to 'Edit', edit_blog_post_path(@blog_post), class: "btn btn-warning" %>
+		<%= link_to edit_blog_post_path(@blog_post), class: "btn btn-sm btn-warning" do %>
+			<i class="glyphicon glyphicon-pencil"></i>
+		<% end %>
+		<%= link_to @blog_post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" do %>
+				<i class='glyphicon glyphicon-trash'></i>
+		<% end %>
 	</div>
 </div>
 
@@ -30,12 +35,20 @@
 		</div>
 		<% @blog_post.comments.each do |comment| %>
 			<div class="panel-body">
-				<p><strong><%= comment.user.username %></strong> said:</p>
+				<p><strong><%= link_to comment.user.username, user_path(comment.user_id) %></strong> said:</p>
 				<p><%= comment.comment %></p>
 				<p><small><em><%= time_ago_in_words(comment.created_at) %> ago</em></small></p>
+				<p>
+					<%= link_to comment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-xs btn-default" do %>
+						<i class='glyphicon glyphicon-trash'></i>
+					<% end %>
+				</p>
 			</div>
 		<% end %>
 	</div>
 <% end %>
 
-<%= link_to 'Back to All Posts', root_path, class: "btn btn-default" %>
+<div class="pull-right">
+	<%= link_to 'Back to All Posts', root_path, class: "btn btn-default" %>
+	<%= link_to 'New Post', new_blog_post_path, class: 'btn btn-default' %>
+</div>
